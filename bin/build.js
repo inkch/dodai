@@ -83,6 +83,6 @@ const buildJs = async (patterns) => {
 }
 
 fs.rmdirSync(outputRoot, { recursive: true })
-buildEjs(['**/*.ejs'])
-buildSass(['**/*.scss'])
-buildJs(['**/*.js'])
+buildEjs(['**/*.ejs']).catch((e) => console.error(e))
+buildSass(['**/*.scss']).catch((e) => console.error(e))
+buildJs(['**/*.js']).catch((e) => console.error(e))
