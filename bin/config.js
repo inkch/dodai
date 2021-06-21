@@ -1,26 +1,32 @@
-const config = {
-  path: {
-    root: __dirname.split('/').slice(0,-1).join('/'),
-    src: __dirname.split('/').slice(0,-1).join('/') + '/src',
-    public: __dirname.split('/').slice(0,-1).join('/') + '/public',
-  },
-  env: {
-    projectroot: __dirname.split('/').slice(0,-1).join('/')
-  },
-  build: {
-    ejs: {
-      root: 'src/ejs',
-    },
-    sass: {
-      minify: true,
-      root: 'src/sass',
-    },
-    js: {
-      minify: true,
-      root: 'src/js',
-    },
-  },
-  dev: {},
+const production = process.env.NODE_ENV === 'production'
+
+const path = {}
+path.root = __dirname.split('/').slice(0,-1).join('/')
+path.src = path.root + '/src'
+path.public = path.root + '/public'
+
+
+const ejs = {
+  data: {
+    production: production,
+    ejsroot: path.src + '/ejs/',
+  }
 }
 
-module.exports = config
+const sass = {
+  outputStyle: production ? "compressed" : "expanded",
+}
+
+
+const js = {
+  minify: production ? true : false,
+}
+
+
+
+module.exports = {
+  path,
+  ejs,
+  sass,
+  js,
+}

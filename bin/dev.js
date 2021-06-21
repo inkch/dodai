@@ -1,10 +1,16 @@
-const config = require('./config')
 const fs = require('fs')
 const http = require('http');
-const nodemon = require('nodemon')
+const livereload = require('livereload')
+const watch = require('node-watch')
+
+const buildEjs = require('./jobs/buildEjs')
+const buildSass = require('./jobs/buildSass')
+const buildJs = require('./jobs/buildJs')
+
+require('./build')
 
 const server = http.createServer(function (req, res) {
-  fs.readFile(config.path.public + req.url, function (err,data) {
+  fs.readFile('public' + req.url, function (err,data) {
     if (err) {
       res.writeHead(404);
       res.end(JSON.stringify(err));
@@ -15,14 +21,31 @@ const server = http.createServer(function (req, res) {
   });
 }).listen(8080);
 
-nodemon({
-  script: 'bin/build.js',
-  ext: '*',
-  watch: 'src'
-}).on('restart', (filename) => {
-  console.log('\n\n[nodemon] File chanded:', filename[0])
-})
 
+
+watch('src/ejs', { recursive: true },
+  (event, filename) => {
+    if (event !== 'update') return
+    buildEjs(filename, 'src/ejs', 'public')
+  })
+
+
+watch('src/sass', { recursive: true },
+  (event, filename) => {
+    if (event !== 'update') return
+    buildSass(filename, 'src/sass', 'public/assets/css')
+  })
+
+
+watch('src/js', { recursive: true },
+  (event, filename) => {
+    if (event !== 'update') return
+    buildJs(filename, 'public/assets/js')
+  })
+
+
+
+livereload.createServer({port: 8081}).watch('public')
 
 
 const leon = () => {
