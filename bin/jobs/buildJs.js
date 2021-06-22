@@ -1,8 +1,10 @@
-const {outputRoot, minify} = require('../config').js
+const { srcRoot, outputRoot, minify } = require('../config').js
 const log = require('../helper/log')
+const glob = require('../helper/glob')
 const esbuild = require('esbuild')
 
 const buildJs = async (srcFiles) => {
+  srcFiles = srcFiles ?? await glob(srcRoot, ['**/*.js', '!**/_*.js'])
   if (typeof srcFiles === 'string') srcFiles = srcFiles.split(',')
 
   let result = esbuild.buildSync({

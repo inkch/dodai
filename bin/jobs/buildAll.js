@@ -5,14 +5,11 @@ const buildJs = require('./buildJs')
 const glob = require('../helper/glob')
 
 const buildAll = async () => {
-  glob(config.ejs.srcRoot, ['**/*.ejs', '!**/_*.ejs'])
-    .then(( ejsFiles ) => buildEjs(ejsFiles))
-
-  glob(config.sass.srcRoot, ['**/*.scss', '!**/_*.scss'])
-    .then(sassFiles => buildSass(sassFiles))
-
-  glob(config.js.srcRoot, ['**/*.js', '!**/_*.js'])
-    .then(jsFiles => buildJs(jsFiles))
+  // glob(config.ejs.srcRoot, ['**/*.ejs', '!**/_*.ejs'])
+  //   .then(( ejsFiles ) => buildEjs(ejsFiles))
+  buildEjs()
+  buildSass()
+  buildJs()
 }
 
 module.exports = buildAll

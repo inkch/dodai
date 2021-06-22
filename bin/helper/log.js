@@ -25,5 +25,6 @@ module.exports = {
   },
   hint: (msg) => {
     _log('  ' + chalk.yellow.bold(msg))
-  }
+  },
+  newline: () => _log(''),
 }
