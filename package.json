@@ -8,6 +8,7 @@
     "fast-glob": "^3.2.5",
     "livereload": "^0.9.3",
     "node-watch": "^0.7.1",
+    "picomatch": "^2.3.0",
     "sass": "^1.35.1"
   },
   "scripts": {

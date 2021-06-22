@@ -1,7 +1,7 @@
-const minify = require('../config').js.minify
+const {outputRoot, minify} = require('../config').js
 const esbuild = require('esbuild')
 
-const buildJs = async (srcFiles, outputDir) => {
+const buildJs = async (srcFiles) => {
   if (typeof srcFiles === 'string') srcFiles = srcFiles.split(',')
 
   let result = esbuild.buildSync({
@@ -10,7 +10,7 @@ const buildJs = async (srcFiles, outputDir) => {
     write: true,
     bundle: true,
     minify: minify,
-    outdir: outputDir,
+    outdir: outputRoot,
   })
 
   if (result.errors.length > 0) console.error(result.errors)
