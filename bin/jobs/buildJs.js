@@ -1,4 +1,5 @@
 const {outputRoot, minify} = require('../config').js
+const log = require('../helper/log')
 const esbuild = require('esbuild')
 
 const buildJs = async (srcFiles) => {
@@ -13,7 +14,10 @@ const buildJs = async (srcFiles) => {
     outdir: outputRoot,
   })
 
-  if (result.errors.length > 0) console.error(result.errors)
+  if (result.errors.length > 0) {
+    log.err('Error: bin/jobs/buildJs.js\n')
+    log.raw(result.errors)
+  }
 }
 
 module.exports = buildJs

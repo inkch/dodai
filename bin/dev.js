@@ -6,21 +6,36 @@ const picomatch = require('picomatch')
 
 const config = require('./config')
 const glob = require('./helper/glob')
+const log = require('./helper/log')
 const buildAll = require('./jobs/buildAll')
 const buildEjs = require('./jobs/buildEjs')
 const buildSass = require('./jobs/buildSass')
 const buildJs = require('./jobs/buildJs')
 
 
-buildAll().then(() => {
-  if (!config.livereload.enable) return
+const startLivereload = () => {
   livereload
     .createServer({ port: config.livereload.port })
+    .on('error', (e) => {
+      if (e.code === 'EADDRINUSE') {
+        log.err([
+          'Error: livereload',
+          'Address already in use ' + e.address + ':' + e.port
+        ])
+        log.hint('Try a different port number that can be configured in `bin/config.js`')
+        log.raw('\nAborted.')
+        close()
+      }})
     .watch(config.path.public)
+}
+
+buildAll().then(() => {
+  if (!config.livereload.enable) return
+  startLivereload()
 })
 
 
-const server = http.createServer(function (req, res) {
+const server = http.createServer((req, res) => {
   fs.readFile(config.path.public + req.url, function (err,data) {
     if (err) {
       res.writeHead(404);
@@ -30,15 +45,25 @@ const server = http.createServer(function (req, res) {
     res.writeHead(200);
     res.end(data);
   });
+}).on('error', (e) => {
+  if (e.code === 'EADDRINUSE') {
+    log.err([
+      'Error: http',
+      'Address already in use ' + e.address + ':' + e.port
+    ])
+    log.hint('Try a different port number that can be configured in `bin/config.js`')
+    log.raw('\nAborted.')
+    close()
+  }
 }).listen(config.server.port);
 
-const closeServer = () => {
+const close = () => {
   server.close()
   process.exit()
 }
 
-process.on('SIGINT', closeServer)
-process.on('SIGTERM', closeServer)
+process.on('SIGINT', close)
+process.on('SIGTERM', close)
 
 
 watch(config.ejs.srcRoot, { recursive: true },

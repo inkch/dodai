@@ -1,6 +1,7 @@
 const {data, srcRoot, outputRoot} = require('../config').ejs
 
 const write = require('../helper/write')
+const log = require('../helper/log')
 const ejs = require('ejs')
 
 const buildEjs = async (src) => {
@@ -9,12 +10,13 @@ const buildEjs = async (src) => {
     data.contentFile = data.ejsroot + ejsFile.replace(srcRoot, '')
     ejs.renderFile(`${srcRoot}/_TEMPLATE.ejs`, data, (err, html) => {
       if (err) {
-        console.dir(err)
+        log.err('Error: bin/jobs/buildEjs.js')
+        log.raw(err)
         throw new Error(err)
       }
 
       const dest = ejsFile.replace(srcRoot, outputRoot).replace('.ejs', '.html')
-      console.log(`  ${dest}`)
+      log.pp(dest)
       write(dest, html)
     })
   })

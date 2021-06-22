@@ -1,6 +1,7 @@
 const { srcRoot, outputRoot, outputStyle} = require('../config').sass
 
 const write = require('../helper/write')
+const log = require('../helper/log')
 const sass = require('sass')
 
 const buildSass = async (src) => {
@@ -15,10 +16,9 @@ const buildSass = async (src) => {
     const dest = f.replace(srcRoot, outputRoot)
                   .replace('.scss', '.css')
 
-    console.log(`  ${dest}`)
+    log.pp(dest)
     write(dest, result.css)
   })
-  console.log()
 }
 
 module.exports = buildSass
