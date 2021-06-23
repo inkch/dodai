@@ -7,6 +7,7 @@ path.public = path.root + '/public'
 
 const ejs = {
   srcRoot: path.root + '/src/ejs',
+  pagesDir: 'pages',
   outputRoot: path.public,
 }
 

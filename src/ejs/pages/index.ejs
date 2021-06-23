@@ -1,0 +1,13 @@
+<%
+const data = {
+  title: "ssssdt sample | Top",
+}
+%>
+
+<%- include(ejsroot + '_header', { title: data.title }) %>
+
+<h1><%- data.title %></h1>
+<p>This page is based on <code>/src/ejs/pages/index.ejs</code></p>
+<%- include('./_content') %>
+
+<%- include(ejsroot + '_footer') %>

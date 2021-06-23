@@ -1,0 +1,5 @@
+    <% if (!production && livereload.enable) { %>
+      <%- include(ejsroot + '/_livereload', { port: livereload.port }) %>
+    <% } %>
+  </body>
+</html>
