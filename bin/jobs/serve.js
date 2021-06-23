@@ -23,9 +23,21 @@ const errorHandler = (who, err) => {
 const serve = () => {
   const fileServer = new nodeStatic.Server(config.path.public)
   const httpServer = http.createServer((req, res) => {
-    req
-      .addListener('end', () => fileServer.serve(req, res))
-      .resume()
+    req.addListener('end', () => {
+      fileServer.serve(req, res, (err) => {
+        if (!err) return
+        if (req.url === '/favicon.ico') {
+          return
+        }
+
+        // There was an error serving the file
+        log.err("Error serving " + req.url + ' - ' + err.message)
+
+        // Respond to the client
+        res.writeHead(err.status, err.headers);
+        res.end(JSON.stringify(err, null, 4))
+      })
+    }).resume()
   })
 
   httpServer.on('error', (e) => errorHandler('http', e))
