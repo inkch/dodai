@@ -1,0 +1,12 @@
+<% const articles = JSON.parse(include('./articles.json')) %>
+
+<%- include(ejsroot + '_header', {title: "ssssdt sample | Articles"}) %>
+
+<h1>Articles</h1>
+<ul>
+<% articles.forEach((article) => { %>
+  <li><a href="./<%- article.title %>.html"><%- article.title %></a></li>
+<% }) %>
+</ul>
+
+<%- include(ejsroot + '_footer') %>

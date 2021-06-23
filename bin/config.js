@@ -7,9 +7,10 @@ path.public = path.root + '/public'
 
 const ejs = {
   srcRoot: path.root + '/src/ejs',
-  pagesDir: 'pages',
   outputRoot: path.public,
 }
+
+ejs.pagesDir = ejs.srcRoot + '/pages'
 
 ejs.data = {
   production: production,

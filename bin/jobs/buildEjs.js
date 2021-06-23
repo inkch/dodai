@@ -1,15 +1,14 @@
-const { data, srcRoot, pagesDir, outputRoot } = require('../config').ejs
+const { data, pagesDir, outputRoot } = require('../config').ejs
 
 const write = require('../helper/write')
 const log = require('../helper/log')
 const glob = require('../helper/glob')
 const ejs = require('ejs')
 
-const buildEjs = async (src) => {
-  src = src ?? await glob(`${srcRoot}/${pagesDir}`, ['**/*.ejs', '!**/_*.ejs'])
-  if (typeof src === 'string') src = src.split(',')
+const buildEjs = async () => {
+  const ejsFiles = await glob(pagesDir, ['**/*.ejs', '!**/_*.ejs'])
 
-  src.forEach(ejsFile => {
+  ejsFiles.forEach(ejsFile => {
     ejs.renderFile(ejsFile, data, (err, html) => {
       if (err) {
         log.err('Error: bin/jobs/buildEjs.js')
@@ -17,7 +16,7 @@ const buildEjs = async (src) => {
         throw new Error(err)
       }
 
-      const dest = ejsFile.replace(`${srcRoot}/${pagesDir}`, outputRoot).replace('.ejs', '.html')
+      const dest = ejsFile.replace(pagesDir, outputRoot).replace('.ejs', '.html')
       log.pp(dest)
       write(dest, html)
     })

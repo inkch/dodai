@@ -1,12 +1,14 @@
 const log = require('./helper/log')
 const clean = require('./jobs/clean')
 const buildEjs = require('./jobs/buildEjs')
+const buildSampleArticles = require('./jobs/buildSampleArticles')
 const buildSass = require('./jobs/buildSass')
 const buildJs = require('./jobs/buildJs')
 
 Promise.all([
   clean(),
   buildEjs(),
+  buildSampleArticles(),
   buildSass(),
   buildJs(),
 ]).catch((e) => {
