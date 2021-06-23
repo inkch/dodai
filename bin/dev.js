@@ -3,6 +3,7 @@ const watch = require('node-watch')
 const config = require('./config')
 const log = require('./helper/log')
 const clean = require('./jobs/clean')
+const copyImages = require('./jobs/copyImages')
 const buildEjs = require('./jobs/buildEjs')
 const buildSampleArticles = require('./jobs/buildSampleArticles')
 const buildSass = require('./jobs/buildSass')
@@ -16,6 +17,7 @@ Promise.all([
   buildSampleArticles(),
   buildSass(),
   buildJs(),
+  copyImages(),
 ]).catch((e) => {
   log.err('Error: bin/dev.js')
   log.raw(e)
