@@ -6,7 +6,7 @@ const clean = require('./jobs/clean')
 const copyImages = require('./jobs/copyImages')
 const buildEjs = require('./jobs/buildEjs')
 const buildSampleArticles = require('./jobs/buildSampleArticles')
-const buildSass = require('./jobs/buildSass')
+const buildSass = require('./jobs/buildSassWithAutoprefixer')
 const buildJs = require('./jobs/buildJs')
 const serve = require('./jobs/serve')
 
