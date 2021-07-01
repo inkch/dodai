@@ -23,19 +23,16 @@
 
 ## 使い方
 
-
-### 準備
-
-
-#### ダウンロード
+### 本テンプレートのダウンロード
 
 zip でダウンロードするか、`Use this template` を使ってください。
 
 
-![Download ZIP](./docs/download_zip.png)
+![how to get](./docs/howto_get.png)
 
 
-![Use this template](./docs/use_this_template.png)
+
+
 
 
 #### パッケージのインストール
