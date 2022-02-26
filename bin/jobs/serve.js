@@ -21,7 +21,7 @@ const errorHandler = (who, err) => {
 
 
 const serve = () => {
-  const fileServer = new nodeStatic.Server(config.path.public)
+  const fileServer = new nodeStatic.Server(config.path.public, { cache: false })
   const httpServer = http.createServer((req, res) => {
     req.addListener('end', () => {
       fileServer.serve(req, res, (err) => {
