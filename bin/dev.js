@@ -25,7 +25,7 @@ Promise.all([
 
 /*eslint no-unused-vars: ["error", { "argsIgnorePattern": "^_" }]*/
 watch(config.ejs.srcRoot, { recursive: true },
-  (event, _) => (event === 'update') && buildEjs())
+  (event, _) => (event === 'update') && buildEjs() && buildSampleArticles())
 
 
 watch(config.sass.srcRoot, { recursive: true },
